@@ -1,0 +1,31 @@
+# Jet SED modelling
+jetset
+
+# Astronomy
+astropy
+
+# Fitting framework
+sherpa
+iminuit
+
+# Statistical sampling
+emcee
+ultranest
+
+# Posterior visualisation
+corner
+
+# Serialisation (for saving fit models)
+dill
+
+# Core scientific stack
+numpy
+scipy
+matplotlib
+pandas
+tqdm
+
+# Notebook
+jupyter
+jupyterlab
+ipykernel
