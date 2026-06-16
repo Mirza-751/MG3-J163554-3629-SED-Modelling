@@ -190,7 +190,7 @@ See `requirements.txt`. Core packages:
 ## Author
 
 **Mirza Laraib Mustafa**
-*MSc/PhD student, University of Padova*
+*MSc student, University of Padova*
 Supervisor: Prof. Eugenio Bottacini
 Co-supervisor: Dr. Andrea Tramacere
 
