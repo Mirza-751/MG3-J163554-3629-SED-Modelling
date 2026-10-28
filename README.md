@@ -1,215 +1,92 @@
-# SED Modelling of High-Redshift Blazar MG3 J163554+3629
+# MG3 J163554+3629: jet physics and black-hole growth at z = 3.65
 
-This repository contains the full analysis pipeline for **Spectral Energy Distribution (SED) modelling** of the high-redshift FSRQ blazar **MG3 J163554+3629** (z = 3.648). The work extends the published one-zone leptonic model of Sánchez Zaballa et al. (2025) by applying multiple statistical fitting methods (Minuit, MCMC, UltraNest nested sampling) and a novel two-zone model, and by deriving Bayesian posterior distributions for the key physical parameters.
+This is the analysis of my master's thesis, *Jet Physics of MG3 J163554+3629 and Its Impact on Supermassive Black
+Hole Evolution in the Early Universe* (M.Sc. Astrophysics and Cosmology, University of Padova, 2026; supervisor
+Prof. Eugenio Bottacini, co-supervisor Dr. Andrea Tramacere). The full thesis is in [`thesis/`](thesis/).
 
----
+MG3 J163554+3629 is one of the most distant blazars detected by Fermi-LAT. I model its broadband SED, including new
+NuSTAR hard X-ray data, with a one-zone leptonic model in [JetSeT](https://github.com/andreatramacere/jetset), and
+then use the fitted disc and jet to ask how a black hole of almost 2×10⁹ M☉ could have grown in the 1.7 Gyr since
+z = 30.
 
-## Repository Structure
+![SED with the MCMC credible bands](results/figures/SED_MCMC_band_eta_0p083_7p.png)
+
+## What I found
+
+- **The emission region.** The SED is well fitted (χ² = 26.3 for 27 dof) with the emission region at
+  R_H ≃ 1.2×10¹⁸ cm, outside the broad-line region and well inside the dusty torus, with B ≃ 0.06 G and Γ ≃ 18.
+- **SSC vs external Compton.** NuSTAR separates the two: SSC gives 60–74 % of the emission at 10 keV and 37–56 % at
+  40 keV, and the rest is external Compton, which also makes all of the γ-rays. This split is the same for every
+  accretion efficiency.
+- **The central engine.** The disc radiates L_disc ≃ 1.9×10⁴⁶ erg/s and the black hole mass is
+  M_BH = (1.8 +0.5/−0.4)×10⁹ M☉ (for an inner disc radius of ~8 R_S), with an Eddington ratio λ ≃ 0.08.
+- **The accretion efficiency can't be measured from the SED.** Seven efficiencies, η = 0.057 to 0.300 (spin
+  a = 0 to ≃ 0.996), fit equally well (Δχ² = 0.76 across the grid): in this model η only changes the geometry of
+  the BLR and torus.
+- **Spin, jets and growth.** The jet carries several times the disc luminosity. Combining the jet power, the growth
+  history and the proton content, the most consistent picture for one cold proton per ten electrons is a black hole
+  spinning fast but not maximally (a ≈ 0.6–0.7) with a standard disc (η ≈ 0.09–0.10), grown from a heavy seed at an
+  average Eddington ratio of 0.33–0.47. This is a consistent picture under the stated assumptions, not a measurement.
+
+![Black-hole growth from z = 30](results/figures/bh_mass_evolution.png)
+
+## The repository
 
 ```
-blazar-sed-modelling/
-│
-├── README.md
-├── requirements.txt
-│
-├── data/
-│   └── SED.txt                              # Multi-wavelength SED (radio → gamma-ray)
-│                                            # Radio (1.4 GHz) to Fermi-LAT (gamma-ray)
-│                                            # Instruments: VLA, WISE, GAIA, Swift-UVOT,
-│                                            #              XMM-Newton, Fermi-LAT, NuSTAR
-│
-├── pipelines/
-│   └── 00_basic_pipeline.ipynb              # Data loading, systematics, binning
-│                                            # SEDShape characterisation (sync + IC peaks)
-│                                            # ObsConstrain prefit: SSC + EC (BLR, Disk, DT)
-│                                            # Opening angle geometry + EBL (Franceschini 2008)
-│   └── Fit_Pipeline_10 june.ipynb           # Earlier working version of the pipeline
-│
-├── analysis/
-│   ├── one_zone/
-│   │   ├── 01_interactive_model.ipynb       # Parameter exploration — tweak and plot instantly
-│   │   └── 02_minuit_mcmc_ultranest.ipynb   # Full statistical analysis:
-│   │                                        #   Minuit → MCMC (emcee) → UltraNest
-│   │                                        #   Free params: B, M_BH, accr_eff (+ others)
-│   │                                        #   Outputs: corner plots, posterior SED, log Z
-│   └── two_zone/
-│       ├── 03_two_zone_model.ipynb          # Two-zone prefit + Minuit fit
-│       │                                    #   Zone 1 (compact): SSC + EC (BLR, Disk, DT)
-│       │                                    #   Zone 2 (extended): SSC only, outside R_DT
-│       └── 04_two_zone_ultranest.ipynb      # UltraNest on two-zone model
-│                                            #   12 free params (Zone1 + Zone2)
-│                                            #   log Z for Bayesian model comparison
-│       └── 2 zone model with ultranest(12 June).ipynb   # Earlier working version
-│
-├── results/
-│   ├── plots/                               # SED plots, corner plots, posterior envelopes
-│   ├── tables/                              # Best-fit parameter tables
-│   ├── models/                              # Saved pkl and npy outputs
-│   ├── ultranest_output_NuSTAR/             # UltraNest run (one zone): chains, posterior summary
-│   └── ultranest_output_2zone/              # UltraNest run (two zones): log
-│
-└── comparison/
-    └── 05_comparison_jose.ipynb             # Comparison with Sánchez Zaballa et al. (2025):
-                                             # M_BH, L_Disk, λ_Edd posteriors vs published
-                                             # Seed black hole mass constraint (z=20 → z=3.65)
-                                             # M_BH posteriors across BH spin grid (η = 0.057–0.300)
+thesis/        the thesis (PDF)
+data/          SED.txt: the multiwavelength SED (radio to Fermi-LAT, incl. NuSTAR)
+analysis/      the thesis analysis, six notebooks run in order + mg3_setup.py
+results/       fitted models, MCMC chains, tables and figures saved by the notebooks
+extensions/    two further analyses: nested sampling (UltraNest) and a two-zone model
 ```
 
----
+### Thesis analysis (`analysis/`)
 
-## Object
+| notebook | |
+|---|---|
+| `01_data_and_template` | the SED, its shape (`SEDShape`) and the starting model (`ObsConstrain`) |
+| `02_base_model` | Minuit fit and MCMC for η = 1/12 |
+| `03_eta_grid` | Minuit and MCMC for each η = 0.057 … 0.300; which process makes the X-rays, MeV and GeV emission |
+| `04_bh_growth` | seed mass and growth history from z = 30 for each η |
+| `05_jet_energetics` | jet powers from the posteriors, proton content, jet power vs disc luminosity |
+| `06_figures_tables_and_slides` | tables and figures for the thesis and the defence |
 
-| Property | Value |
-|----------|-------|
-| Name | MG3 J163554+3629 |
-| 4FGL designation | 4FGL J1635.6+3628 |
-| Redshift | z = 3.648 |
-| Classification | High-redshift FSRQ blazar |
-| Position | R.A. = 248.947°, Dec = +36.492° |
-| SED coverage | Radio (1.4 GHz) → Gamma-ray (10²⁵ Hz) |
-| Variability timescale | 7 days |
+The fitted models and chains are in `results/`, so the notebooks open with all their figures and rerun in minutes
+without refitting. Notebook 02 has `RUN_FIT` / `RUN_MCMC` switches, and notebook 03 skips any η whose fit or chain
+already exists; delete those files to redo a fit (~15 min per fit, the same for each MCMC).
 
----
+### Extensions (`extensions/`)
 
-## Methods Overview
+Before settling on the thesis set-up I also tried two things that are worth keeping. They use an earlier version of
+the data handling (slightly different upper limits; the two-zone model also rebins the SED and drops the lowest-energy
+Fermi-LAT point), so their numbers are not directly comparable with the thesis.
 
-### Physical Model
+| notebook | |
+|---|---|
+| `01_one_zone_ultranest` | the one-zone model sampled with UltraNest, which also gives the Bayesian evidence |
+| `02_two_zone_model` | a compact zone plus an extended zone outside the torus, so that the radio data can be fitted too |
+| `03_two_zone_ultranest` | nested sampling of the two-zone model, and Minuit vs MCMC vs UltraNest on the same 7 parameters |
+| `04_comparison_sanchez_zaballa` | the two-zone results next to the published one-zone model |
 
-All fits use **JetSeT** (Tramacere et al. 2009, 2011, 2020) to build leptonic jet models with a broken power-law electron distribution:
+The UltraNest runs take hours; the notebooks show the outputs of my runs and the chains are in
+`extensions/results/`.
 
-n(γ) = K × γ^{−p} for γ < γ_break, K × γ^{−p₁} for γ ≥ γ_break
+## Running it
 
-The emission model includes:
-- **Synchrotron** radiation (self-absorbed)
-- **SSC** (Synchrotron Self-Compton)
-- **EC** (External Compton) from: Broad Line Region, Accretion Disk (MultiBB), Dust Torus
-- **EBL absorption** via Franceschini et al. (2008)
-
-The emitting region is located outside the BLR but within R_DT — consistent with EC_DT dominating the IC peak.
-
-**Two-zone extension:** Zone 1 is a compact near-zone (R_H = 1.5×10¹⁸ cm); Zone 2 is an extended zone at 5×R_DT contributing SSC and synchrotron to the radio/sub-mm.
-
-### Fitting Pipeline
-
-| Step | Notebook | Tool | Notes |
-|------|----------|------|-------|
-| Prefit | `00_basic_pipeline` | JetSeT `ObsConstrain` | Physical initial guess from SED shape |
-| Interactive | `01_interactive_model` | Manual | Parameter sensitivity exploration |
-| One-zone fit | `02_minuit_mcmc_ultranest` | Minuit → MCMC → UltraNest | Full statistical analysis |
-| Two-zone fit | `03_two_zone_model` | Minuit | Prefit + best-fit of composite model |
-| Two-zone Bayes | `04_two_zone_ultranest` | UltraNest | Nested sampling, log Z for model comparison |
-| Comparison | `05_comparison_jose` | — | Posteriors vs Sánchez Zaballa et al. (2025) |
-
-### UltraNest Details
-- Reactive nested sampler (`ultranest.ReactiveNestedSampler`) with slice stepping
-- 200–400 live points depending on dimensionality
-- Uniform priors within physically motivated ranges
-- Bayesian evidence log Z enables model comparison (1-zone vs 2-zone, different η values)
-- Seed mass constraint: Shapiro (2005) exponential growth from z = 20 to z = 3.65 (t = 1.72 Gyr)
-
----
-
-## Key Physical Parameters
-
-| Parameter | Symbol | Sánchez Zaballa et al. (2025) | Description |
-|-----------|--------|-------------------|-------------|
-| Magnetic field | B | 6.56×10⁻² G | Jet co-moving frame field strength |
-| Bulk Lorentz factor | Γ | 19.0 | Jet bulk motion |
-| Electron normalisation | N | 9.21×10² cm⁻³ | Number density of emitting electrons |
-| Spectral index (low) | p | 1.45 | Below break |
-| Spectral index (high) | p₁ | 3.58 | Above break |
-| Break Lorentz factor | γ_break | 940 | Transition energy |
-| Black hole mass | M_BH | 1.1×10⁹ M☉ | Central engine mass |
-| Disk luminosity | L_Disk | 1.41×10⁴⁶ erg/s | Accretion disk power |
-| Accretion efficiency | η | 0.083 | L_Disk = η Ṁ c² |
-| Eddington ratio | λ_Edd | ~0.109 | L_Disk / L_Edd |
-| Dust torus temperature | T_DT | 927 K | Peak of DT seed photon field |
-| Dissipation distance | R_diss | 1.5×10¹⁸ cm | Outside BLR, inside R_DT |
-
----
-
-## Comparison with Published Work
-
-Results are compared against:
-
-> **Sánchez Zaballa, J.M., Bottacini, E., & Tramacere, A. (2025)**
-> *The High-redshift Blazar MG3 J163554+3629: Physical Properties and the Enigma of Its Unexpected Supermassive Black Hole Growth*
-> Accepted ApJ — [arXiv:2505.13593](https://arxiv.org/abs/2505.13593)
-
-Key published results:
-- M_BH = 1.1 (+0.2/−0.1) × 10⁹ M☉
-- L_Disk = 1.41 × 10⁴⁶ erg/s
-- η = 0.083 (best-fit), explored from η = 0.057 (a=0) to η = 0.300 (a~0.998)
-- Eddington-limited growth from z~30 cannot account for the observed M_BH — super-Eddington accretion or jet-enhanced growth required
-
----
-
-## Getting Started
-
-### 1. Clone the repository
-```bash
-git clone https://github.com/Mirza-751/MG3-J163554-3629-SED-Modelling.git
-cd MG3-J163554-3629-SED-Modelling
-```
-
-### 2. Set up the environment
 ```bash
 conda create -n jetset_env python=3.9
 conda activate jetset_env
 pip install -r requirements.txt
 ```
 
-The analysis was developed and run with **JetSeT 1.3.0** on Python 3.9. `requirements.txt` does not pin versions, so a
-newer JetSeT (1.4 is in preparation) may give slightly different fitted values.
+Everything was run with JetSeT 1.3.0; newer versions can move the fitted values slightly.
 
-### 3. Run in order
-```
-00_basic_pipeline.ipynb        ← start here (pipelines/)
-01_interactive_model.ipynb     ← explore parameters (analysis/one_zone/)
-02_minuit_mcmc_ultranest.ipynb ← full statistical fit (analysis/one_zone/)
-03_two_zone_model.ipynb        ← two-zone Minuit (analysis/two_zone/)
-04_two_zone_ultranest.ipynb    ← two-zone nested sampling (analysis/two_zone/)
-05_comparison_jose.ipynb       ← comparison with paper (comparison/)
-```
+## References
 
-> **Note:** UltraNest runs are computationally expensive (hours). The outputs of the runs used here (saved models
-> `*.pkl`, samples `*.npy`, and the `ultranest_output_*/` folders) are included in `results/`, so the plots and
-> comparisons can be checked without re-running the samplers. Re-running the notebooks regenerates them.
+The model set-up follows Sánchez Zaballa, Bottacini & Tramacere (2025), *The high-redshift blazar MG3 J163554+3629:
+physical properties and the enigma of its unexpected supermassive black hole growth*, ApJ,
+[arXiv:2505.13593](https://arxiv.org/abs/2505.13593). JetSeT: Tramacere (2020), Tramacere et al. (2011, 2009).
 
-> **Important:** All notebooks build the JetSeT model from scratch rather than loading from `.pkl` files. This avoids an issue seen with JetSeT 1.3.0, where the dependent parameter `R = R_H × tan(θ_open)` became corrupted after serialisation with `dill`.
+## Contact
 
----
-
-## Requirements
-
-See `requirements.txt`. Core packages:
-
-- `jetset` — leptonic jet SED modelling (Tramacere et al. 2020)
-- `astropy` — units, coordinates, data handling
-- `emcee` — MCMC ensemble sampler
-- `ultranest` — nested sampling and Bayesian evidence
-- `iminuit` — Minuit gradient minimiser
-- `corner` — posterior triangle plots
-- `dill` — model serialisation
-- `matplotlib`, `numpy`, `scipy` — scientific computing
-
----
-
-## Author
-
-**Mirza Laraib Mustafa**
-*MSc student, University of Padova*
-Supervisor: Prof. Eugenio Bottacini
-Co-supervisor: Dr. Andrea Tramacere
-
----
-
-## Reference
-
-> Sánchez Zaballa, J.M., Bottacini, E., & Tramacere, A. (2025). *The High-redshift Blazar MG3 J163554+3629: Physical Properties and the Enigma of Its Unexpected Supermassive Black Hole Growth.* Accepted ApJ. [arXiv:2505.13593](https://arxiv.org/abs/2505.13593)
-
----
-
-## License
-
-Shared for academic review. Please contact the author before reusing any analysis code or results.
+Mirza Laraib Mustafa. Please get in touch before reusing the analysis or results.

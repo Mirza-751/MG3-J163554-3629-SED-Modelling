@@ -1,0 +1,33 @@
+FINAL PARAMETER VALUES - Two-Zone Leptonic SSC+EC Model
+MG3 J163554+3629
+================================================================================
+
+FREE PARAMETERS (ultranest, 7-param, 43 points, top-2 Fermi excluded)
+--------------------------------------------------------------------------------
+Param                              Median      -1sigma      +1sigma       Minuit
+jet_leptonic.B                      4.6131e-02   8.0991e-03   1.0820e-02   3.9628e-02
+jet_leptonic.BulkFactor             1.1654e+01   1.0087e+00   1.3113e+00   1.0937e+01
+jet_leptonic.N                      1.3584e+03   4.2310e+02   4.1978e+02   7.9249e+02
+jet_leptonic.gamma_break            4.6443e+02   1.6120e+02   1.8503e+02   5.1254e+02
+jet_leptonic.R_H                    1.2445e+18   2.4804e+17   4.5284e+17   1.6906e+18
+jet_leptonic.accr_eff               8.2584e-02   6.4357e-03   7.7195e-03   8.3000e-02
+jet_extended.N                      2.4530e-01   3.7793e-02   4.7408e-02   2.8333e-01
+
+FROZEN PARAMETERS (fixed at Minuit best-fit)
+--------------------------------------------------------------------------------
+jet_leptonic.p                    = 1.2959e+00
+jet_leptonic.p_1                  = 2.7536e+00
+jet_leptonic.M_BH                 = 1.4056e+09
+jet_leptonic.L_Disk               = 1.6877e+46
+jet_leptonic.gmin                 = 1.8165e+00
+jet_leptonic.T_DT                 = 9.2515e+02
+jet_extended.B                    = 1.7205e-03
+
+DERIVED QUANTITIES (at ultranest median)
+--------------------------------------------------------------------------------
+Beaming factor (Zone 1) = 16.9790
+Beaming factor (Zone 2) = 16.9790
+R (Zone 1)  = 6.5221e+16 cm
+R (Zone 2)  = 6.5911e+18 cm
+R_DT        = 2.5982e+19 cm
+R_BLR_in    = 3.8974e+17 cm

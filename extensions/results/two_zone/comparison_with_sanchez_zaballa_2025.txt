@@ -1,0 +1,38 @@
+Comparison: Sanchez Zaballa, Bottacini & Tramacere (2025, arXiv:2505.13593)
+one-zone model (Table 2, eta=0.083) vs this work's two-zone model (Zone 1)
+==========================================================================================
+
+Parameter                   Published   This work (Minuit)    This work (ultranest)
+------------------------------------------------------------------------------------------
+R [cm]                      7.900e+16            8.866e+16       6.522e+16 (frozen)
+R_H (R_diss) [cm]           1.500e+18            1.692e+18 1.244e+18 (-2.48e+17/+4.53e+17)
+B [G]                       6.560e-02            3.922e-02 4.613e-02 (-8.10e-03/+1.08e-02)
+theta [deg]                 3.000e+00            3.000e+00       3.000e+00 (frozen)
+BulkFactor (Gamma)          1.900e+01            1.064e+01 1.165e+01 (-1.01e+00/+1.31e+00)
+delta (Doppler)             1.900e+01            1.623e+01       1.698e+01 (frozen)
+gmin                        1.000e+00            1.816e+00       1.816e+00 (frozen)
+gamma_break                 9.400e+02            5.241e+02 4.644e+02 (-1.61e+02/+1.85e+02)
+gmax                        2.000e+04            1.600e+04       1.600e+04 (frozen)
+N [cm^-3]                   9.210e+02            8.022e+02 1.358e+03 (-4.23e+02/+4.20e+02)
+p                           1.450e+00            1.296e+00       1.296e+00 (frozen)
+p_1                         3.580e+00            2.754e+00       2.754e+00 (frozen)
+M_BH [Msun]                 1.100e+09            1.406e+09       1.406e+09 (frozen)
+accr_eff (eta)              8.300e-02            7.832e-02 8.258e-02 (-6.44e-03/+7.72e-03)
+L_Disk [erg/s]              1.410e+46            1.688e+46       1.688e+46 (frozen)
+R_DT [cm]                   2.370e+19            2.598e+19       2.598e+19 (frozen)
+T_DT [K]                    9.270e+02            9.252e+02       9.252e+02 (frozen)
+R_BLR_in [cm]               3.560e+17            3.897e+17       3.897e+17 (frozen)
+R_BLR_out [cm]              3.920e+17            4.287e+17       4.287e+17 (frozen)
+
+NOTES:
+- 'Published' = Sanchez Zaballa+2025 one-zone best-fit (Table 2, eta=0.083)
+- 'This work' Zone 1 = compact zone (between BLR and DT), Sync+SSC+EC
+- This work additionally includes a Zone 2 (extended, beyond DT,
+  Sync+SSC only) which fits the radio data points not modeled
+  in the published one-zone work, plus the NuSTAR hard X-ray points.
+- Differences in B, BulkFactor, N, gamma_break, p, p_1 reflect the
+  redistribution of the emission budget across two zones and the
+  inclusion of additional (radio + NuSTAR) data.
+- Central-engine quantities (M_BH, L_Disk, accr_eff, R_DT, T_DT,
+  R_BLR_in/out) agree well between the two works, anchored by the
+  same accretion-disk thermal bump in the optical/UV data.

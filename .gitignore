@@ -1,0 +1,6 @@
+.ipynb_checkpoints/
+jet_wd/
+**/jet_wd/
+__pycache__/
+results/mcmc_*.pkl
+results/figures_overleaf/

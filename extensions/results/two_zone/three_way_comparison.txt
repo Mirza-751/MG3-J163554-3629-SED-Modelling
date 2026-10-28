@@ -1,0 +1,12 @@
+THREE-WAY PARAMETER COMPARISON
+Minuit vs MCMC vs ultranest (7 free params, 43 points)
+====================================================================================================
+
+Param                              Minuit    MCMC median     MCMC -1s     MCMC +1s      UN median       UN -1s       UN +1s
+jet_leptonic.B                      3.9220e-02     4.2929e-02   4.6465e-03   5.7124e-03     4.6131e-02   8.0991e-03   1.0820e-02
+jet_leptonic.BulkFactor             1.0636e+01     1.0710e+01   5.1493e-01   9.4764e-01     1.1654e+01   1.0087e+00   1.3113e+00
+jet_leptonic.N                      8.0216e+02     8.6340e+02   1.2994e+02   2.0588e+02     1.3584e+03   4.2310e+02   4.1978e+02
+jet_leptonic.gamma_break            5.2413e+02     4.9348e+02   1.0638e+02   1.0232e+02     4.6443e+02   1.6120e+02   1.8503e+02
+jet_leptonic.R_H                    1.6918e+18     1.6109e+18   2.0739e+17   1.8361e+17     1.2445e+18   2.4804e+17   4.5284e+17
+jet_leptonic.accr_eff               7.8319e-02     8.0367e-02   5.8221e-03   7.9815e-03     8.2584e-02   6.4357e-03   7.7195e-03
+jet_extended.N                      2.8939e-01     2.8397e-01   4.3694e-02   3.7748e-02     2.4530e-01   3.7793e-02   4.7408e-02
